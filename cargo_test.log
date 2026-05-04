@@ -1,0 +1,56 @@
+   Compiling wlx-capture v0.6.0 (/app/wlx-capture)
+   Compiling ron v0.12.0
+   Compiling futures-executor v0.3.31
+   Compiling convert_case v0.6.0
+   Compiling wayland-protocols-plasma v0.3.10
+   Compiling itertools v0.14.0
+   Compiling env_filter v0.1.4
+   Compiling libloading v0.9.0
+   Compiling heck v0.5.0
+   Compiling jiff v0.2.17
+   Compiling unsafe-libyaml v0.2.11
+   Compiling semver v1.0.27
+   Compiling flagset v0.4.7
+   Compiling xdg v2.5.2
+   Compiling atomic_float v1.1.0
+   Compiling appendlist v1.4.0
+   Compiling bcdec_rs v0.2.0
+   Compiling pathdiff v0.2.3
+   Compiling ryu v1.0.22
+   Compiling dpi v0.1.2
+   Compiling multimap v0.10.1
+   Compiling prost-build v0.14.3
+   Compiling winit v0.30.12
+   Compiling serde_yaml v0.9.34+deprecated
+   Compiling config v0.15.19
+   Compiling image_dds v0.7.2
+   Compiling smithay v0.7.0
+   Compiling libmonado v1.6.0 (https://github.com/wayvr-org/libmonado-rs.git?rev=6f66b26930c24a8a2fc57ddcd85704784894c750#6f66b269)
+   Compiling env_logger v0.11.8
+   Compiling openxr v0.21.0
+   Compiling futures v0.3.31
+   Compiling xcb v1.7.0
+   Compiling dbus v0.9.10
+   Compiling input-linux v0.7.1
+   Compiling chrono-tz v0.10.4
+   Compiling signal-hook v0.3.18
+   Compiling log-panics v2.1.0
+   Compiling serde_json5 v0.2.1
+   Compiling json5 v1.3.0
+   Compiling sysinfo v0.37.2
+   Compiling shell-words v1.1.1
+   Compiling wayvrctl v26.2.1 (/app/wayvrctl)
+   Compiling uidev v0.1.0 (/app/uidev)
+   Compiling prost_build v0.1.0 (/app/scripts/prost_build)
+   Compiling dash-frontend v0.1.0 (/app/dash-frontend)
+error: linking with `cc` failed: exit status: 1
+  |
+  = note:  "cc" "-m64" "/app/target/debug/deps/rustcUaT8yD/symbols.o" "<39 object files omitted>" "-Wl,--as-needed" "-Wl,-Bstatic" "<sysroot>/lib/rustlib/x86_64-unknown-linux-gnu/lib/{libtest-*,libgetopts-*,librustc_std_workspace_std-*}.rlib" "/app/target/debug/deps/{librxscreen-d4c1ca5e4f6d33bc,libpipewire-63cb6b49e4730802,libpipewire_sys-a4edbbcced052180,liblibspa-507fd95234f4168b,liblibspa_sys-9428bf5ec25c8033,libcookie_factory-5f52e24d2fc2c929,libnom-d9b63a7f23b97f28,libashpd-32099ba1a7cbd185,libasync_fs-168bb50ee1576503,libasync_net-0d3ce84bcfb4237a,libfutures_util-4d92a26fa9b44032,libmemchr-a2d90ab759165b04,libfutures_channel-f0669d753d999d4b,libfutures_sink-8f18e87174dfb6b0,libfutures_task-f6f4495637cf4f2a,libpin_utils-bca0fff336338d7a,libzbus-65a102ad7df72473,libblocking-bcefaa1e259ea6c5,libpiper-b47103cd7d98c71d,libatomic_waker-712b31d15b622c92,libhex-198b0370fceb5cbc,libuuid-869b12d7993affb1,librand-22a760e93e30c56f,librand_chacha-6f6f697c86144961,libppv_lite86-1e02d9982afb07aa,libzerocopy-37b8e8c5e7bc2f1b,librand_core-f6d80fc42f7fdb87,libgetrandom-694aac53481a1b7a,libasync_executor-93a2b916384a229d,libasync_process-d19c47dc98e6136d,libasync_signal-0d9b789cafef6bd7,libsignal_hook_registry-9b95ed72f9c044a5,liberrno-427a04cfc1fc6c21,libasync_lock-2378ef5a87ed36a2,libasync_task-982a8441799e7e79,libasync_channel-f800aec4d9acaab2,libordered_stream-816b147aa68352cd,libasync_broadcast-b77f704e8ccd98a8,libevent_listener_strategy-035c05a470065e67,libevent_listener-e021eb95a481ec5a,libnix-bf874152da78ea7e,libmemoffset-01474ced22eb2403,libasync_io-7ead3967aaab9921,libslab-ca370a3714a231ef,libconcurrent_queue-0e4ae863a43de87a,libcrossbeam_utils-5c9dd812d925e1a3,libfutures_lite-b03967ac7f58554b,libfutures_core-b24af390aa878810,libparking-6cf2b3a340bde43d,libfastrand-aba05f93b1b9024d,libfutures_io-9ef365b6e33ecbcf,libzbus_names-235310f2d4e2d038,libzvariant-66d798641c3639a9,liburl-6235d2c603a31e39,libidna-e6dc7f42a29a2a56,libutf8_iter-917aace40c652f31,libidna_adapter-b1f4a53595611f51,libicu_properties-6a44892cc0adecc7,libicu_properties_data-938a6a4cac7c24f8,libicu_normalizer-a0319336d05ebc7a,libicu_normalizer_data-6d6603d4a2112cb1,libicu_collections-a8379acb229fdf83,libpotential_utf-d03b79d680a8bc0c,libicu_provider-0c303c3e518b3205,libicu_locale_core-c85b56d7cb93aa0e,libtinystr-670b5fd7904be991,liblitemap-41d0290469019b49,libwriteable-4d02d6f754f43373,libzerovec-ac78a01e513a3a01,libzerotrie-ec631018e2e4eded,libyoke-fd5a6a5888daeb50,libstable_deref_trait-bb37da65a3207a7c,libzerofrom-9348c48f08ed2317,libform_urlencoded-05e02e77160b02ef,libpercent_encoding-0e7f88889faa623f,libenumflags2-0311e8ec4ced036f,libendi-4d64e3ec09294469,libzvariant_utils-fdcb1366dd9a3435,libwinnow-05593954ea2b6eab,libsyn-f15f4fca8a27634d,libquote-d7d2d2d0547c1592,libproc_macro2-71846ea965127bd8,libunicode_ident-221307eeebaab228}.rlib" "<sysroot>/lib/rustlib/x86_64-unknown-linux-gnu/lib/{libproc_macro-*,librustc_literal_escaper-*}.rlib" "/app/target/debug/deps/{libstatic_assertions-9d05e4b6a7ea51ba,libsmithay_client_toolkit-8151fd77c2afa65d,libthiserror-a203bf5edd4a9d8d,libwayland_cursor-cadd05cae40e7a18,libxcursor-814f1e069e3c95e0,libxkbcommon-92bacb3e623f3388,libas_raw_xcb_connection-fc469bcd665f984a,libxkeysym-c3268e13c593732f,libbytemuck-d0f54d9ab0d89dd6,libmemmap2-8e7a23fbd814459e,liblibc-ea552e3d0c1a6576,libwayland_protocols_wlr-b588dc2896315551,libwayland_protocols_misc-8c4fdf458da9d1dd,libwayland_protocols_experimental-8bd049498aa97398,libwayland_protocols-87f56e306ebae943,libwayland_server-8e77270982eba137,libwayland_csd_frame-2905cba79bf29ab6,libcursor_icon-d2e11831800f95e4,libcalloop_wayland_source-f35603df63953747,libwayland_client-a141a8211f26cd5f,libwayland_backend-d084176c576260ee,libdowncast_rs-31c09c31c05e4e06,libscoped_tls-77374f98ba5bb6f3,libwayland_sys-c224108b988b2ba1,libdlib-94dbf4f60a37e05a,liblibloading-1afc90977298018e,libsmallvec-582e069d4e64af92,libcalloop-707fab8f1ddf36ec,libtracing-90ecb3127e77d93d,libpin_project_lite-d526712f225b1d7d,libtracing_core-6c4271a0df4dd3e7,libonce_cell-52bfee4b1048f7c7,libpolling-d47d439a94642725,librustix-e2c7eeffe72222d8,libbitflags-5bb8601923f37acc,liblinux_raw_sys-ef4a46a2ef31a613,libcfg_if-01a5df7c71184aab,liblog-d1b48ee3453e0c56,libidmap-398383fdc147874a,libfixedbitset-6baa04b623b7d423,libserde-2d1f92fb3ef0b3b2,libserde_core-ff82e45a82c3b8ce,libdrm_fourcc-63b86de7b04c27c0}.rlib" "<sysroot>/lib/rustlib/x86_64-unknown-linux-gnu/lib/{libstd-*,libpanic_unwind-*,libobject-*,libmemchr-*,libaddr2line-*,libgimli-*,libcfg_if-*,librustc_demangle-*,libstd_detect-*,libhashbrown-*,librustc_std_workspace_alloc-*,libminiz_oxide-*,libadler2-*,libunwind-*,liblibc-*,librustc_std_workspace_core-*,liballoc-*,libcore-*,libcompiler_builtins-*}.rlib" "-Wl,-Bdynamic" "-lX11" "-lXext" "-lXrandr" "-lpipewire-0.3" "-lpipewire-0.3" "-lxkbcommon" "-lxkbcommon" "-lxkbcommon-x11" "-ldl" "-lgcc_s" "-lutil" "-lrt" "-lpthread" "-lm" "-ldl" "-lc" "-L" "/app/target/debug/deps/rustcUaT8yD/raw-dylibs" "-B<sysroot>/lib/rustlib/x86_64-unknown-linux-gnu/bin/gcc-ld" "-fuse-ld=lld" "-Wl,--eh-frame-hdr" "-Wl,-z,noexecstack" "-L" "/app/target/debug/build/libspa-3a935cde86aa62d7/out" "-L" "/app/target/debug/build/libspa-sys-2566a8b7cc09ab67/out" "-L" "/usr/lib/x86_64-linux-gnu" "-L" "<sysroot>/lib/rustlib/x86_64-unknown-linux-gnu/lib" "-o" "/app/target/debug/deps/wlx_capture-4515ebdb73ad06de" "-Wl,--gc-sections" "-pie" "-Wl,-z,relro,-z,now" "-nodefaultlibs"
+  = note: some arguments are omitted. use `--verbose` to show all linker arguments
+  = note: rust-lld: error: unable to find library -lXrandr
+          rust-lld: error: unable to find library -lxkbcommon-x11
+          collect2: error: ld returned 1 exit status
+
+
+error: could not compile `wlx-capture` (lib test) due to 1 previous error
+warning: build failed, waiting for other jobs to finish...

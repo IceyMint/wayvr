@@ -1,0 +1,35 @@
+    Checking wlx-common v0.1.0 (/app/wlx-common)
+   Compiling ovr_overlay_sys v0.0.0 (https://github.com/galister/ovr_overlay_oyasumi?rev=e477bd2a9e04293ea68c1e7529ef2cb131f32acc#e477bd2a)
+    Checking hashlink v0.10.0
+    Checking keyvalues-parser v0.2.2 (https://github.com/CosmicHorrorDev/vdf-rs.git?rev=fc6dcbea9eb13cacb98dea40063f6f56cde6e145#fc6dcbea)
+    Checking toml_parser v1.0.6+spec-1.1.0
+    Checking phf_shared v0.12.1
+    Checking sharded-slab v0.1.7
+    Checking wayland-protocols-experimental v20250721.0.1
+error: failed to run custom build command for `ovr_overlay_sys v0.0.0 (https://github.com/galister/ovr_overlay_oyasumi?rev=e477bd2a9e04293ea68c1e7529ef2cb131f32acc#e477bd2a)`
+
+Caused by:
+  process didn't exit successfully: `/app/target/debug/build/ovr_overlay_sys-b00a0b97df644c28/build-script-build` (exit status: 101)
+  --- stdout
+  cargo:rerun-if-env-changed=OPENVR_NO_VENDOR
+  cargo:rustc-link-lib=dylib=openvr_api
+  cargo:rustc-link-search=native="/app/target/debug/build/ovr_overlay_sys-0b1e691a30e41cfe/out"
+
+  --- stderr
+  libclang: crash detected during parsing: {
+    'source_filename' : ''
+    'command_line_args' : ['clang', '-x', 'c++', '-std=c++14', '-DBINDGEN', '-I/home/jules/.cargo/git/checkouts/ovr_overlay_oyasumi-41d3c4863a4948df/e477bd2/sys/openvr/headers', '-I/app/target/debug/build/ovr_overlay_sys-0b1e691a30e41cfe/out/autocxx-build-dir/include', '-isystem', '/usr/bin/../lib/gcc/x86_64-linux-gnu/13/../../../../include/c++/13', '-isystem', '/usr/bin/../lib/gcc/x86_64-linux-gnu/13/../../../../include/x86_64-linux-gnu/c++/13', '-isystem', '/usr/bin/../lib/gcc/x86_64-linux-gnu/13/../../../../include/c++/13/backward', '-isystem', '/usr/lib/llvm-18/lib/clang/18/include', '-isystem', '/usr/local/include', '-isystem', '/usr/include/x86_64-linux-gnu', '-isystem', '/usr/include', '/home/jules/.cargo/git/checkouts/ovr_overlay_oyasumi-41d3c4863a4948df/e477bd2/sys/example.hpp'],
+    'unsaved_files' : [('/home/jules/.cargo/git/checkouts/ovr_overlay_oyasumi-41d3c4863a4948df/e477bd2/sys/example.hpp', '...', 846)],
+    'options' : 1,
+  }
+
+  thread 'main' (137004) panicked at /home/jules/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/autocxx-bindgen-0.71.1/ir/context.rs:564:15:
+  libclang error; possible causes include:
+  - Invalid flag syntax
+  - Unrecognized flags
+  - Invalid flag arguments
+  - File I/O errors
+  - Host vs. target architecture mismatch
+  If you encounter an error missing from this list, please file an issue or a PR!
+  note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+warning: build failed, waiting for other jobs to finish...
