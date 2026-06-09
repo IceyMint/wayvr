@@ -227,7 +227,7 @@ where
     let mut maybe_dmabuf = None;
 
     'receiver: loop {
-        for event in rx.try_iter() {
+        for event in rx.iter() {
             match event {
                 ScreenCopyEvent::Buffer { .. } => {
                     log::trace!("{name}: ScreenCopy Buffer event received");
