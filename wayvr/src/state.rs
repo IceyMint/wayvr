@@ -71,6 +71,8 @@ pub struct AppState {
 
     #[cfg(feature = "openxr")]
     pub monado_state: Option<backend::openxr::monado_state::MonadoState>,
+
+    pub delta_time: f32,
 }
 
 #[allow(unused_mut)]
@@ -90,7 +92,7 @@ impl AppState {
             .log_err("Could not initialize WayVR Server")
             .ok();
 
-        let mut hid_provider = HidWrapper::new();
+        let (hid_provider, mut hid_error) = HidWrapper::new();
 
         #[cfg(feature = "osc")]
         let osc_sender = crate::subsystem::osc::OscSender::new(session.config.osc_out_port).ok();
@@ -155,7 +157,7 @@ impl AppState {
 
         let lang_provider = WayVRLangProvider::from_config(&session.config);
 
-        Ok(Self {
+        let mut app_state = Self {
             session,
             tasks,
             gfx,
@@ -188,7 +190,14 @@ impl AppState {
 
             #[cfg(feature = "openxr")]
             monado_state: None,
-        })
+
+            delta_time: 1.0 / 120.0,
+        };
+
+        if let Some(error_toast) = hid_error {
+            error_toast.submit(&mut app_state);
+        }
+        Ok(app_state)
     }
 
     #[cfg(feature = "openxr")]

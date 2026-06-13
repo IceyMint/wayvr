@@ -1,6 +1,6 @@
 use crate::tab::settings::{
 	SettingType, SettingsMountParams, SettingsTab,
-	macros::{options_category, options_checkbox, options_slider_f32},
+	macros::{options_category, options_checkbox, options_range_f32, options_slider_f32},
 };
 
 pub struct State {}
@@ -13,12 +13,25 @@ impl State {
 		options_checkbox(par.mp, c, SettingType::NotificationsEnabled)?;
 		options_checkbox(par.mp, c, SettingType::NotificationsSoundEnabled)?;
 		options_checkbox(par.mp, c, SettingType::KeyboardSoundEnabled)?;
-		options_checkbox(par.mp, c, SettingType::SpaceDragUnlocked)?;
-		options_checkbox(par.mp, c, SettingType::SpaceRotateUnlocked)?;
-		options_slider_f32(par.mp, c, SettingType::SpaceDragMultiplier, -10.0, 10.0, 0.5)?;
-		options_checkbox(par.mp, c, SettingType::BlockGameInput)?;
-		options_checkbox(par.mp, c, SettingType::BlockGameInputIgnoreWatch)?;
-		options_checkbox(par.mp, c, SettingType::BlockPosesOnKbdInteraction)?;
+		if !par.feats.openxr || par.feats.monado {
+			// monado or openvr
+			options_checkbox(par.mp, c, SettingType::BlockGameInput)?;
+			options_checkbox(par.mp, c, SettingType::BlockGameInputIgnoreWatch)?;
+		}
+		if par.feats.monado {
+			// monado-only
+			options_checkbox(par.mp, c, SettingType::BlockPosesOnKbdInteraction)?;
+		}
+
+		options_range_f32(
+			par.mp,
+			c,
+			SettingType::WatchViewAngleMin,
+			SettingType::WatchViewAngleMax,
+			0.1,
+			1.0,
+			0.1,
+		)?;
 		Ok(State {})
 	}
 }

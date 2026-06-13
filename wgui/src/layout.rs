@@ -11,7 +11,7 @@ use crate::{
 	drawing::{
 		self, ANSI_BOLD_CODE, ANSI_RESET_CODE, Boundary, PushScissorStackResult, push_scissor_stack, push_transform_stack,
 	},
-	event::{self, CallbackDataCommon, Event, EventAlterables},
+	event::{self, CallbackDataCommon, Event, EventAlterables, StyleSetRequest},
 	globals::WguiGlobals,
 	sound::WguiSoundType,
 	task::Tasks,
@@ -149,6 +149,7 @@ pub type LayoutDispatchFunc = Box<dyn FnOnce(&mut CallbackDataCommon) -> anyhow:
 pub enum LayoutTask {
 	RemoveWidget(WidgetID),
 	SetWidgetStyle(WidgetID, event::StyleSetRequest),
+	SetWidgetVisible(WidgetID, bool), // if true, sets Display to Flex; None, otherwise
 	ModifyLayoutState(LayoutModifyStateFunc),
 	PlaySound(WguiSoundType),
 	Dispatch(LayoutDispatchFunc),
@@ -229,7 +230,7 @@ fn add_child_internal(
 }
 
 impl Layout {
-	pub fn common(&mut self) -> CallbackDataCommon<'_> {
+	pub const fn common(&mut self) -> CallbackDataCommon<'_> {
 		CallbackDataCommon {
 			alterables: &mut self.alterables,
 			state: &self.state,
@@ -480,7 +481,7 @@ impl Layout {
 		Ok(())
 	}
 
-	fn get_event_params<'a>(
+	const fn get_event_params<'a>(
 		&'a self,
 		l: &'a taffy::Layout,
 		node_id: taffy::NodeId,
@@ -745,6 +746,16 @@ impl Layout {
 				}
 				LayoutTask::SetWidgetStyle(widget_id, style_request) => {
 					self.set_style_request(widget_id, &style_request);
+				}
+				LayoutTask::SetWidgetVisible(widget_id, visible) => {
+					self.set_style_request(
+						widget_id,
+						&StyleSetRequest::Display(if visible {
+							taffy::Display::Flex
+						} else {
+							taffy::Display::None
+						}),
+					);
 				}
 				LayoutTask::SetFocus(weak) => {
 					if let Some(c) = weak.upgrade() {
