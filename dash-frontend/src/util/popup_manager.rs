@@ -6,12 +6,11 @@ use std::{
 use wgui::{
 	assets::AssetPath,
 	components::button::ComponentButton,
-	event::{EventAlterables, StyleSetRequest},
+	event::EventAlterables,
 	globals::WguiGlobals,
 	i18n::Translation,
 	layout::{Layout, LayoutTask, LayoutTasks, WidgetID},
 	parser::{Fetchable, ParseDocumentParams, ParserState},
-	taffy::Display,
 	widget::label::WidgetLabel,
 };
 use wlx_common::config::GeneralConfig;
@@ -135,11 +134,7 @@ impl<ViewType: ViewTrait> PopupHolder<ViewType> {
 		F: FnOnce(&mut ViewType) -> R,
 	{
 		let mut state = self.state.borrow_mut();
-		if let Some(view) = state.view.as_mut() {
-			Some(f(view))
-		} else {
-			None
-		}
+		state.view.as_mut().map(f)
 	}
 
 	// Same as with_view, but the closure expects a simple anyhow::Result<()> type
@@ -190,20 +185,18 @@ pub struct PopupContentFuncData<'a> {
 }
 
 type PopupClosedCallback = Box<dyn FnOnce()>;
+type OnContentCallback = Box<dyn FnOnce(PopupContentFuncData) -> anyhow::Result<PopupClosedCallback>>;
 
 // we need to implement Clone here, but the underlying function can be called only once.
 // on_content will be cleared after the first call
 #[derive(Clone)]
 pub struct MountPopupOnceParams {
 	title: Translation,
-	on_content: Rc<RefCell<Option<Box<dyn FnOnce(PopupContentFuncData) -> anyhow::Result<PopupClosedCallback>>>>>,
+	on_content: Rc<RefCell<Option<OnContentCallback>>>,
 }
 
 impl MountPopupOnceParams {
-	pub fn new(
-		title: Translation,
-		on_content: Box<dyn FnOnce(PopupContentFuncData) -> anyhow::Result<PopupClosedCallback>>,
-	) -> Self {
+	pub fn new(title: Translation, on_content: OnContentCallback) -> Self {
 		Self {
 			title,
 			on_content: Rc::new(RefCell::new(Some(on_content))),
@@ -238,15 +231,7 @@ impl State {
 			let popup = popup.upgrade().unwrap(); // safe
 			let popup = popup.borrow_mut();
 			let mounted_popup = popup.mounted_popup.as_ref().unwrap(); // safe;
-
-			alterables.set_style(
-				mounted_popup.id_root,
-				StyleSetRequest::Display(if idx == self.popup_stack.len() - 1 {
-					Display::Flex
-				} else {
-					Display::None
-				}),
-			);
+			alterables.set_widget_visible(mounted_popup.id_root, idx == self.popup_stack.len() - 1);
 		}
 	}
 }
@@ -313,15 +298,14 @@ impl PopupManager {
 		but_back.on_click({
 			let popup_handle = Rc::downgrade(&popup_handle.state);
 			Rc::new(move |_common, _evt| {
-				if let Some(popup_handle) = popup_handle.upgrade() {
-					if let Some(closed_callback) = {
+				if let Some(popup_handle) = popup_handle.upgrade()
+					&& let Some(closed_callback) = {
 						let mut state = popup_handle.borrow_mut();
 						state.mounted_popup = None; // will call Drop
 						state.closed_callback.take()
 					} {
-						log::debug!("closed_callback called");
-						closed_callback();
-					}
+					log::debug!("closed_callback called");
+					closed_callback();
 				}
 				Ok(())
 			})

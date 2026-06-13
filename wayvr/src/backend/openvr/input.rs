@@ -4,6 +4,7 @@ use anyhow::bail;
 use ovr_overlay::{
     TrackedDeviceIndex,
     input::{ActionHandle, ActionSetHandle, ActiveActionSet, InputManager, InputValueHandle},
+    overlay::OverlayManager,
     sys::{
         ETrackedControllerRole, ETrackedDeviceClass, ETrackedDeviceProperty,
         ETrackingUniverseOrigin,
@@ -144,6 +145,7 @@ impl OpenVrInputSource {
         &mut self,
         universe: ETrackingUniverseOrigin,
         input: &mut InputManager,
+        overlay: &mut OverlayManager,
         system: &mut SystemManager,
         app: &mut AppState,
     ) {
@@ -189,7 +191,7 @@ impl OpenVrInputSource {
             let hand = &mut self.hands[i];
             let app_hand = &mut app.input_state.pointers[i];
 
-            if let Some(device) = hand.device {
+            if let Some(device) = hand.device.filter(|_| !overlay.is_dashboard_visible()) {
                 app_hand.raw_pose = devices[device.0 as usize]
                     .mDeviceToAbsoluteTracking
                     .to_affine();
@@ -330,6 +332,17 @@ fn get_tracked_device(
     index: TrackedDeviceIndex,
     role: TrackedDeviceRole,
 ) -> Option<TrackedDevice> {
+    let provides_battery = system
+        .get_tracked_device_property(
+            index,
+            ETrackedDeviceProperty::Prop_DeviceProvidesBatteryStatus_Bool,
+        )
+        .unwrap_or(false);
+    if !provides_battery {
+        // don't show devices that don't have battery info
+        return None;
+    }
+
     let soc = system
         .get_tracked_device_property(
             index,

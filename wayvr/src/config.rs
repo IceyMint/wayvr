@@ -1,7 +1,10 @@
 use config::{Config, File};
 use log::error;
 use serde::{Deserialize, Serialize};
-use std::path::{Path, PathBuf};
+use std::{
+    path::{Path, PathBuf},
+    sync::Arc,
+};
 use wayvr_ipc::packet_client::WvrProcessLaunchParams;
 use wlx_common::{
     astr_containers::AStrMap,
@@ -45,7 +48,7 @@ where
     panic!("No usable config found.");
 }
 
-const SUPPORTED_EXTESIONS: [&'static str; 4] = ["yaml", "yml", "json", "json5"];
+const SUPPORTED_EXTESIONS: [&str; 4] = ["yaml", "yml", "json", "json5"];
 
 fn is_supported_config_file(path: &Path) -> bool {
     if path.is_dir() {
@@ -142,6 +145,7 @@ pub struct AutoSettings {
     pub keyboard_sound_enabled: bool,
     pub upright_screen_fix: bool,
     pub double_cursor_fix: bool,
+    pub enable_watch: bool,
     pub sets_on_watch: bool,
     pub hide_grab_help: bool,
     pub xr_click_sensitivity: f32,
@@ -153,12 +157,21 @@ pub struct AutoSettings {
     pub block_game_input_ignore_watch: bool,
     pub block_poses_on_kbd_interaction: bool,
     pub space_drag_multiplier: f32,
+    pub watch_view_angle_min: f32,
+    pub watch_view_angle_max: f32,
     pub use_skybox: bool,
+    pub skybox_texture: Arc<str>,
     pub grid_opacity: f32,
     pub use_passthrough: bool,
     pub screen_render_down: bool,
     pub pointer_lerp_factor: f32,
     pub space_drag_unlocked: bool,
+    pub space_gravity_damping: f32,
+    pub space_gravity_enabled: bool,
+    pub space_gravity_fling_strength: f32,
+    pub space_gravity_gravity: f32,
+    pub space_gravity_ground_friction: f32,
+    pub space_gravity_floor_height: f32,
     pub space_rotate_unlocked: bool,
     pub clock_12h: bool,
     pub hide_username: bool,
@@ -194,6 +207,7 @@ pub fn save_settings(config: &GeneralConfig) -> anyhow::Result<()> {
         keyboard_sound_enabled: config.keyboard_sound_enabled,
         upright_screen_fix: config.upright_screen_fix,
         double_cursor_fix: config.double_cursor_fix,
+        enable_watch: config.enable_watch,
         sets_on_watch: config.sets_on_watch,
         hide_grab_help: config.hide_grab_help,
         xr_click_sensitivity: config.xr_click_sensitivity,
@@ -205,12 +219,21 @@ pub fn save_settings(config: &GeneralConfig) -> anyhow::Result<()> {
         block_game_input_ignore_watch: config.block_game_input_ignore_watch,
         block_poses_on_kbd_interaction: config.block_poses_on_kbd_interaction,
         space_drag_multiplier: config.space_drag_multiplier,
+        watch_view_angle_min: config.watch_view_angle_min,
+        watch_view_angle_max: config.watch_view_angle_max,
         use_skybox: config.use_skybox,
+        skybox_texture: config.skybox_texture.clone(),
         grid_opacity: config.grid_opacity,
         use_passthrough: config.use_passthrough,
         screen_render_down: config.screen_render_down,
         pointer_lerp_factor: config.pointer_lerp_factor,
         space_drag_unlocked: config.space_drag_unlocked,
+        space_gravity_damping: config.space_gravity_damping,
+        space_gravity_enabled: config.space_gravity_enabled,
+        space_gravity_fling_strength: config.space_gravity_fling_strength,
+        space_gravity_gravity: config.space_gravity_gravity,
+        space_gravity_ground_friction: config.space_gravity_ground_friction,
+        space_gravity_floor_height: config.space_gravity_floor_height,
         space_rotate_unlocked: config.space_rotate_unlocked,
         clock_12h: config.clock_12h,
         hide_username: config.hide_username,
